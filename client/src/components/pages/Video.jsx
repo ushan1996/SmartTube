@@ -19,7 +19,7 @@
 // import Recommendation from "../Recommendation";
 // const Container = styled.div`
 //   display: flex;
-//   gap: 24px; 
+//   gap: 24px;
 // `;
 // const Content = styled.div`
 //   flex:5;
@@ -68,9 +68,9 @@
 // `;
 // const Image = styled.img`
 //   width: 50px;
-//   height: 50px;  
+//   height: 50px;
 //   border-radius: 50%;
-//   padding:7px; 
+//   padding:7px;
 // `;
 // const ChennelDetails = styled.div`
 //   display:flex;
@@ -90,13 +90,13 @@
 //   color: ${({theme}) => theme.textSoft };
 // `;
 // const Description = styled.p`
-//   margin-top: 10px; 
+//   margin-top: 10px;
 //   font-weight: 500;
 //   font-size: 15px;
 //   color: ${({theme}) => theme.text };
 // `;
 // const SubcribeButton = styled.button`
-//   margin-top: 10px; 
+//   margin-top: 10px;
 //   background-color:#cc1a00;
 //   font-weight: 700;
 //   color:white;
@@ -111,7 +111,7 @@
 //   width: 100%;
 //   object-fit: cover;
 // `;
-// export const Video = () => { 
+// export const Video = () => {
 // //   const {currentUser} = useSelector((state)=>state.user);
 // //   const {currentVideo} = useSelector((state)=>state.video);
 // //   // console.log(currentUser)
@@ -157,7 +157,7 @@
 //     };
 //     fetchData();
 //   }, [path, dispatch]);
-  
+
 //   const handleLike = async () => {
 //     await axios.put(`/users/like/${currentVideo._id}`);
 //     dispatch(like(currentUser._id));
@@ -173,7 +173,7 @@
 //       : await axios.put(`/users/sub/${channel._id}`);
 //     dispatch(subscription(channel._id));
 //   };
-  
+
 //   return (
 //     <Container>
 //      <Content>
@@ -201,7 +201,7 @@
 //               )}{" "}
 //               Dislike
 //             </Button>
-         
+
 //           <Button><ReplyAllRoundedIcon fontSize="small"/> Share</Button>
 //           <Button><ContentCutRoundedIcon fontSize="small"/> Clip</Button>
 //           <Button><SendAndArchiveRoundedIcon fontSize="small"/> Save</Button>
@@ -232,23 +232,23 @@
 //   )
 // }
 
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
-import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbDownOffAltOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
+import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
+import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import styled, { ThemeProvider } from "styled-components";
-import { dislike, fetchSuccess, like } from "../../redux/videoSlice"
-import axios from "axios";
+import styled from 'styled-components';
+import { dislike, fetchSuccess, like } from '../../redux/videoSlice';
+import axios from 'axios';
 import { subscription } from '../../redux/userSlice';
 import { format } from 'timeago.js';
 import { Comments } from '../Comments';
-import Recommendation from "../Recommendation";
-import Image1 from '../../Images/logo2.png';
+import Recommendation from '../Recommendation';
+//import Image1 from '../../Images/logo2.png';
 //import Image1 from 'channel.img';
 const Container = styled.div`
   display: flex;
@@ -350,17 +350,17 @@ const VideoFrame = styled.video`
   object-fit: cover;
 `;
 const Video = () => {
-  const path = useLocation().pathname.split("/")[2];
+  const path = useLocation().pathname.split('/')[2];
   const [channel, setChannel] = useState({});
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const { currentVideo } = useSelector((state) => state.video);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  //const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   useEffect(() => {
-  console.log("Enter to useEffect ")
-  
+    console.log('Enter to useEffect ');
+
     const fetchData = async () => {
-      console.log("Enter to fetchData ")
+      console.log('Enter to fetchData ');
       try {
         const videoRes = await axios.get(`/videos/find/${path}`);
         const channelRes = await axios.get(
@@ -371,12 +371,10 @@ const Video = () => {
       } catch (err) {}
     };
     fetchData();
-  
-  
-  }, [path,dispatch]);
+  }, [path, dispatch]);
 
- // console.log(PF +channel.img )
-  
+  // console.log(PF +channel.img )
+
   const handleLike = async () => {
     await axios.put(`/users/like/${currentVideo._id}`);
     dispatch(like(currentUser._id));
@@ -392,81 +390,101 @@ const Video = () => {
       : await axios.put(`/users/sub/${channel._id}`);
     dispatch(subscription(channel._id));
   };
-  
+
   if (currentVideo === null) {
     return 'Loading...';
   }
   return (
     <Container>
-
-    <Content>
-      <VideoWrapper>
-        <VideoFrame src={currentVideo.videoUrl} controls />
-      </VideoWrapper>
-      <Title>{currentVideo.title}</Title>
-      <Details>
-        <Info>
-          {currentVideo.views} views • {format(currentVideo.createdAt)}
-        </Info>
-        <Buttons>
-          <Button onClick={handleLike}>
-          {currentUser !== null ? (<> {currentVideo.likes.includes(currentUser._id ) ? (
-              <ThumbUpIcon />
+      <Content>
+        <VideoWrapper>
+          <VideoFrame src={currentVideo.videoUrl} controls />
+        </VideoWrapper>
+        <Title>{currentVideo.title}</Title>
+        <Details>
+          <Info>
+            {currentVideo.views} views • {format(currentVideo.createdAt)}
+          </Info>
+          <Buttons>
+            <Button onClick={handleLike}>
+              {currentUser !== null ? (
+                <>
+                  {' '}
+                  {currentVideo.likes.includes(currentUser._id) ? (
+                    <ThumbUpIcon />
+                  ) : (
+                    <ThumbUpOutlinedIcon />
+                  )}{' '}
+                  {currentVideo.likes.length}
+                </>
+              ) : (
+                <>
+                  <ThumbUpIcon />
+                </>
+              )}
+            </Button>
+            <Button onClick={handleDislike}>
+              {currentUser !== null ? (
+                <>
+                  {currentVideo.dislikes.includes(currentUser._id) ? (
+                    <ThumbDownIcon />
+                  ) : (
+                    <ThumbDownOffAltOutlinedIcon />
+                  )}{' '}
+                  Dislike
+                </>
+              ) : (
+                <>
+                  <ThumbDownIcon /> Dislike
+                </>
+              )}
+            </Button>
+            <Button>
+              <ReplyOutlinedIcon /> Share
+            </Button>
+            <Button>
+              <AddTaskOutlinedIcon /> Save
+            </Button>
+          </Buttons>
+        </Details>
+        <Hr />
+        <Channel>
+          <ChannelInfo>
+            <Image
+              src={
+                channel.img
+                  ? channel.img
+                  : 'https://firebasestorage.googleapis.com/v0/b/smarttube-b0596.appspot.com/o/default.png?alt=media&token=66493d31-ee5a-42aa-9822-f97cb23ee54c'
+              }
+            />
+            {/* <Image src={Image1}  /> */}
+            {/* <img src={user.coverPicture ? PF + user.coverPicture : PF+"person/default-cover.gif"} alt="" className="profileCoverImage" /> */}
+            {/* <img src="../../Images/logo2.png"/> */}
+            <ChannelDetail>
+              <ChannelName>{channel.name}</ChannelName>
+              <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
+              <Description>{currentVideo.desc}</Description>
+            </ChannelDetail>
+          </ChannelInfo>
+          <Subscribe onClick={handleSub}>
+            {currentUser !== null ? (
+              <>
+                {' '}
+                {currentUser.subscribedUsers.includes(channel._id)
+                  ? 'SUBSCRIBED'
+                  : 'SUBSCRIBE'}
+              </>
             ) : (
-              <ThumbUpOutlinedIcon />
-            )}{" "}
-            {currentVideo.likes.length}</>):(<>
-              <ThumbUpIcon />
-            </>)}
-           
-          </Button>
-          <Button onClick={handleDislike}>
-            {currentUser !== null ? (<>{currentVideo.dislikes.includes(currentUser._id) ? (
-              <ThumbDownIcon />
-            ) : (
-              <ThumbDownOffAltOutlinedIcon />
-            )}{" "}
-            Dislike</>) : (<>
-              <ThumbDownIcon />
-            {" "}
-            Dislike</>)} 
-            
-          </Button>
-          <Button>
-            <ReplyOutlinedIcon /> Share
-          </Button>
-          <Button>
-            <AddTaskOutlinedIcon /> Save
-          </Button>
-        </Buttons>
-      </Details>
-      <Hr />
-      <Channel>
-        <ChannelInfo>
-       
-          <Image src={channel.img ? channel.img : "https://firebasestorage.googleapis.com/v0/b/smarttube-b0596.appspot.com/o/default.png?alt=media&token=66493d31-ee5a-42aa-9822-f97cb23ee54c"} />
-        {/* <Image src={Image1}  /> */}
-         {/* <img src={user.coverPicture ? PF + user.coverPicture : PF+"person/default-cover.gif"} alt="" className="profileCoverImage" /> */}
-         {/* <img src="../../Images/logo2.png"/> */}
-          <ChannelDetail>
-            <ChannelName>{channel.name}</ChannelName>
-            <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
-            <Description>{currentVideo.desc}</Description>
-          </ChannelDetail>
-        </ChannelInfo>
-        <Subscribe onClick={handleSub}>
-        {currentUser !== null ? (<> {currentUser.subscribedUsers.includes(channel._id)
-            ? "SUBSCRIBED"
-            : "SUBSCRIBE"}</>):("SUBSCRIBE")}
-         
-        </Subscribe>
-      </Channel>
-      <Hr />
-      <Comments videoId={currentVideo._id} /> 
-    </Content>
-    <Recommendation tags={currentVideo.tags} />
-  </Container>
-  )
-}
+              'SUBSCRIBE'
+            )}
+          </Subscribe>
+        </Channel>
+        <Hr />
+        <Comments videoId={currentVideo._id} />
+      </Content>
+      <Recommendation tags={currentVideo.tags} />
+    </Container>
+  );
+};
 
-export default Video
+export default Video;
